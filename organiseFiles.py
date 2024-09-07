@@ -54,6 +54,7 @@ if choice == 1:
                         os.mkdir(directory + "/" + category)
                     # Move the file to the respective directory
                     shutil.move(directory + "/" + file, directory + "/" + category + "/" + file)
+                    file_count[extension] += 1
                     break
     print("Files have been organised")
     for ext, count in file_count.items():
