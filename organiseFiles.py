@@ -3,6 +3,7 @@ import sys
 import os
 import shutil
 import argparse
+from tqdm import tqdm
 
 # Directory to organise
 parser = argparse.ArgumentParser(description="Organise files based on their file extensions")
@@ -38,8 +39,8 @@ print("2. Exit")
 choice = int(input())
 
 if choice == 1:
-    # Iterate over the directory
-    for file in os.listdir(directory):
+    # Iterate over the directory with a progress bar
+    for file in tqdm(os.listdir(directory), desc="Organising files", unit="file"):
         # Iterate over the file extensions
         for category, extensions in file_extensions.items():
             # Check if the file extension is in the list of extensions
