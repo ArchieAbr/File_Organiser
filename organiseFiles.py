@@ -14,19 +14,19 @@ args = parser.parse_args()
 directory = args.directory
 # List of file extensions and their respective directories
 file_extensions = {
-    "images": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
+    "images": [".jpeg", ".jpg", ".HEIC", ".JPG", ".PNG", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
                ".heif", ".psd"],
     "videos": [".avi", ".flv", ".wmv", ".mov", ".mp4", ".webm", ".vob",
-               ".mng", ".qt", ".mpg", ".mpeg", ".3gp"],
+               ".mng", ".qt", ".mpg", ".mpeg", ".3gp", ".MOV"],
     "documents": [".oxps", ".epub", ".pages", ".docx", ".doc", ".fdf", ".ods",
                   ".odt", ".pwi", ".xsn", ".xps", ".dotx", ".docm", ".dox",
-                  ".rvg", ".rtf", ".rtfd", ".wpd", ".xls", ".xlsx"],
+                  ".rvg", ".rtf", ".rtfd", ".wpd", ".vtt"],
     "archives": [".a", ".ar", ".cpio", ".iso", ".tar", ".gz", ".rz", ".7z",
                  ".dmg", ".rar", ".xar", ".zip"],
     "audio": [".aac", ".aa", ".aac", ".dvf", ".m4a", ".m4b", ".m4p", ".mp3",
               ".msv", "ogg", "oga", ".raw", ".vox", ".wav", ".wma"],
     "plain_text": [".txt", ".in", ".out"],
-    "pdf": [".pdf"],
+    "pdf": [".pdf", ".PDF"],
     "iso": [".iso"],
     "powerpoint": [".pptx", ".ppt"],
     "spreadsheet": [".csv", ".xls", ".xlsx"]
