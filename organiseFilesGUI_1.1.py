@@ -2,6 +2,9 @@
 import sys
 import os
 import shutil
+
+from macholib.ptypes import sizeof
+from pandas.io.formats.style import color
 from tqdm import tqdm
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
@@ -54,22 +57,31 @@ def organize_files(directory):
     messagebox.showinfo("Organize Files", result_message)
 
 
-# Function for directory selection
-def select_directory():
-    directory = filedialog.askdirectory()
-    if directory:
-        organize_files(directory)
+# GUI class using customtkinter
+class FileOrganizerApp(ctk.CTk):
+    def __init__(self):
+        super().__init__()
 
-# GUI
-root = tk.Tk()
-root.title("File Organizer")
+        self.title("File Organizer")
+        self.geometry("250x200")
 
-# Select Directory Button
-select_button = tk.Button(root, text="Select Directory", command=select_directory)
-select_button.pack(pady=20)
+        # Set the appearance mode
+        ctk.set_appearance_mode("system")
+        ctk.set_default_color_theme("green")
 
-# Exit Button
-exit_button = tk.Button(root, text="Exit", command=root.quit)
-exit_button.pack(pady=10)
+        # Create and configure widgets
+        self.select_button = ctk.CTkButton(self, text="Select Directory", command=self.select_directory, width=200, height=50)
+        self.select_button.pack(pady=20)
 
-root.mainloop()
+        self.exit_button = ctk.CTkButton(self, text="Exit", command=self.quit, width=200, height=50, hover_color="red")
+        self.exit_button.pack(pady=10)
+
+    def select_directory(self):
+        directory = filedialog.askdirectory()
+        if directory:
+            organize_files(directory)
+
+# Main function to run the application
+if __name__ == "__main__":
+    app = FileOrganizerApp()
+    app.mainloop()
