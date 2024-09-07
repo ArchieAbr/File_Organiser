@@ -2,35 +2,30 @@
 import sys
 import os
 import shutil
-
-from macholib.ptypes import sizeof
-from pandas.io.formats.style import color
-from tqdm import tqdm
 import customtkinter as ctk
-from tkinter import filedialog, messagebox
 
 # List of file extensions and their respective directories
 file_extensions = {
-    "images": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
+    "Images": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
                ".heif", ".psd"],
-    "videos": [".avi", ".flv", ".wmv", ".mov", ".mp4", ".webm", ".vob",
+    "Videos": [".avi", ".flv", ".wmv", ".mov", ".mp4", ".webm", ".vob",
                ".mng", ".qt", ".mpg", ".mpeg", ".3gp"],
-    "documents": [".oxps", ".epub", ".pages", ".docx", ".doc", ".fdf", ".ods",
+    "Documents": [".oxps", ".epub", ".pages", ".docx", ".doc", ".fdf", ".ods",
                   ".odt", ".pwi", ".xsn", ".xps", ".dotx", ".docm", ".dox",
                   ".rvg", ".rtf", ".rtfd", ".wpd", ".xls", ".xlsx"],
-    "archives": [".a", ".ar", ".cpio", ".iso", ".tar", ".gz", ".rz", ".7z",
+    "Archives": [".a", ".ar", ".cpio", ".iso", ".tar", ".gz", ".rz", ".7z",
                  ".dmg", ".rar", ".xar", ".zip"],
-    "audio": [".aac", ".aa", ".aac", ".dvf", ".m4a", ".m4b", ".m4p", ".mp3",
+    "Audio": [".aac", ".aa", ".aac", ".dvf", ".m4a", ".m4b", ".m4p", ".mp3",
               ".msv", "ogg", "oga", ".raw", ".vox", ".wav", ".wma"],
-    "plain_text": [".txt", ".in", ".out"],
+    "Plain_Text": [".txt", ".in", ".out"],
     "pdf": [".pdf"],
     "iso": [".iso"],
-    "powerpoint": [".pptx", ".ppt"],
-    "spreadsheet": [".csv", ".xls", ".xlsx"]
+    "PowerPoint": [".pptx", ".ppt"],
+    "Spreadsheet": [".csv", ".xls", ".xlsx"]
 }
 
 # Function to organize files
-def organize_files(directory):
+def organize_files(directory, result_label):
     file_count = {ext: 0 for exts in file_extensions.values() for ext in exts}
 
     # Iterate over the directory to organize files
@@ -48,14 +43,14 @@ def organize_files(directory):
                     file_count[extension] += 1
                     break
 
-    # Show a message box with the results
+    # Prepare the result message
     result_message = "Files have been organized:\n"
     for ext, count in file_count.items():
         if count > 0:
             result_message += f"{count} {ext} files moved\n"
 
-    messagebox.showinfo("Organize Files", result_message)
-
+    # Update the label with the result message
+    result_label.configure(text=result_message)
 
 # GUI class using customtkinter
 class FileOrganizerApp(ctk.CTk):
@@ -63,25 +58,53 @@ class FileOrganizerApp(ctk.CTk):
         super().__init__()
 
         self.title("File Organizer")
-        self.geometry("250x200")
+        self.geometry("500x400")
 
-        # Set the appearance mode
-        ctk.set_appearance_mode("system")
-        ctk.set_default_color_theme("green")
+        # Set the appearance mode ("System", "Dark", "Light")
+        ctk.set_appearance_mode("Dark")
+        ctk.set_default_color_theme("blue")
 
         # Create and configure widgets
-        self.select_button = ctk.CTkButton(self, text="Select Directory", command=self.select_directory, width=200, height=50)
+        self.directory_entry = ctk.CTkEntry(self, width=300, font=("Arial", 14))
+        self.directory_entry.pack(pady=20)
+
+        self.browse_button = ctk.CTkButton(
+            self, text="Browse", command=self.browse_directory, width=100, height=30, font=("Arial", 12)
+        )
+        self.browse_button.pack(pady=10)
+
+        self.select_button = ctk.CTkButton(
+            self, text="Organize Files", command=self.organize_files_button, width=200, height=50, font=("Arial", 16)
+        )
         self.select_button.pack(pady=20)
 
-        self.exit_button = ctk.CTkButton(self, text="Exit", command=self.quit, width=200, height=50, hover_color="red")
+        self.exit_button = ctk.CTkButton(
+            self, text="Exit", command=self.quit, width=200, height=50, font=("Arial", 16),
+            fg_color="gray", hover_color="red"
+        )
         self.exit_button.pack(pady=10)
 
-    def select_directory(self):
-        directory = filedialog.askdirectory()
+        # Label to display results
+        self.result_label = ctk.CTkLabel(self, text="", font=("Arial", 14), wraplength=350)
+        self.result_label.pack(pady=20)
+
+    def browse_directory(self):
+        # Open a native file dialog to choose a directory
+        directory = ctk.filedialog.askdirectory()
         if directory:
-            organize_files(directory)
+            self.directory_entry.delete(0, ctk.END)  # Clear the entry
+            self.directory_entry.insert(0, directory)  # Insert selected path
+
+    def organize_files_button(self):
+        directory = self.directory_entry.get()
+        if os.path.isdir(directory):  # Check if the directory is valid
+            organize_files(directory, self.result_label)
+        else:
+            self.result_label.configure(text="Please enter a valid directory path!")
 
 # Main function to run the application
 if __name__ == "__main__":
     app = FileOrganizerApp()
     app.mainloop()
+
+
