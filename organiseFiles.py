@@ -2,18 +2,10 @@
 import sys
 import os
 import shutil
-import argparse
 from tqdm import tqdm
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
-# Directory to organise
-parser = argparse.ArgumentParser(description="Organise files based on their file extensions")
-parser.add_argument("directory", help="Directory to organise")
-args = parser.parse_args()
-
-# Directory to organise
-directory = args.directory
 # List of file extensions and their respective directories
 file_extensions = {
     "images": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
