@@ -1,12 +1,16 @@
 # Script to organise files based on their file extensions
-
+import sys
 import os
 import shutil
+import argparse
 
 # Directory to organise
+parser = argparse.ArgumentParser(description="Organise files based on their file extensions")
+parser.add_argument("directory", help="Directory to organise")
+args = parser.parse_args()
 
-directory = os.getcwd() + "/organise"
-
+# Directory to organise
+directory = args.directory
 # List of file extensions and their respective directories
 file_extensions = {
     "images": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
@@ -47,5 +51,7 @@ if choice == 1:
                     # Move the file to the respective directory
                     shutil.move(directory + "/" + file, directory + "/" + category + "/" + file)
                     break
+    print("Files have been organised")
+    sys.exit("Exiting the program")
 else:
-    exit()
+    sys.exit("Exiting the program")
