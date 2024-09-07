@@ -3,7 +3,7 @@ import sys
 import os
 import shutil
 from tqdm import tqdm
-import tkinter as tk
+import customtkinter as ctk
 from tkinter import filedialog, messagebox
 
 # List of file extensions and their respective directories
