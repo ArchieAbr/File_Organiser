@@ -32,6 +32,9 @@ file_extensions = {
     "spreadsheet": [".csv", ".xls", ".xlsx"]
 }
 
+# Dictionary to keep track of the count of each file type
+file_count = {ext: 0 for exts in file_extensions.values() for ext in exts}
+
 # Give the user a choice to organise the files or exit the program
 print("Choose an option: ")
 print("1. Organise files")
@@ -53,6 +56,9 @@ if choice == 1:
                     shutil.move(directory + "/" + file, directory + "/" + category + "/" + file)
                     break
     print("Files have been organised")
+    for ext, count in file_count.items():
+        if count > 0:
+            print(f"{count} {ext} files moved")
     sys.exit("Exiting the program")
 else:
     sys.exit("Exiting the program")
