@@ -61,15 +61,15 @@ class FileOrganizerApp(ctk.CTk):
         self.geometry("500x400")
 
         # Set the appearance mode ("System", "Dark", "Light")
-        ctk.set_appearance_mode("Dark")
-        ctk.set_default_color_theme("blue")
+        ctk.set_appearance_mode("system")
+        ctk.set_default_color_theme("green")
 
         # Create and configure widgets
         self.directory_entry = ctk.CTkEntry(self, width=300, font=("Arial", 14))
         self.directory_entry.pack(pady=20)
 
         self.browse_button = ctk.CTkButton(
-            self, text="Browse", command=self.browse_directory, width=100, height=30, font=("Arial", 12)
+            self, text="Browse", command=self.browse_directory, width=200, height=50, font=("Arial", 16)
         )
         self.browse_button.pack(pady=10)
 
@@ -85,7 +85,7 @@ class FileOrganizerApp(ctk.CTk):
         self.exit_button.pack(pady=10)
 
         # Label to display results
-        self.result_label = ctk.CTkLabel(self, text="", font=("Arial", 14), wraplength=350)
+        self.result_label = ctk.CTkLabel(self, text="", font=("Arial", 12), wraplength=350)
         self.result_label.pack(pady=20)
 
     def browse_directory(self):
